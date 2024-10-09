@@ -1,7 +1,7 @@
-from user_interface import ask_user_input
+from user_interface import launch_program
 
 def main():
-  ask_user_input()
+  launch_program()
   return
 
 if __name__ == "__main__":

@@ -1,9 +1,6 @@
-import os
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-
 from data_processing import train_test_split, StandardScaler
 from evaluation_methods import mean_absolute_error, mean_squared_error
 
@@ -29,14 +26,12 @@ class LinearRegression:
 		X = df.drop('price', axis=1)
 		y = df['price']
 
-		plt.scatter(X, y, color='blue')
-		plt.xlabel('mileage')
-		plt.ylabel('price')
-		plt.title('Data')
-		if not os.path.exists("graphs"):
-			os.makedirs("graphs")
-		plt.savefig("graphs/data_scatterplot.png")
-		plt.show()
+		fig, ax = plt.subplots()
+		ax.scatter(X, y, color='blue')
+		ax.set_xlabel('mileage')
+		ax.set_ylabel('price')
+		ax.set_title('Data')
+		return fig, ax
 
 	def train(self):
 		df = pd.read_csv('data/data.csv')
@@ -51,7 +46,6 @@ class LinearRegression:
 
 		self.scaler = StandardScaler()
 		self.X_train_scaled = self.scaler.fit_transform(X_train)
-		# self.X_test_scaled = self.scaler.fit_transform(X_test)
 
 		for _ in range(self.iterations):
 			self.theta_0, self.theta_1 = self.update_thetas()
@@ -78,15 +72,13 @@ class LinearRegression:
 		X = np.array(self.X, dtype=float)
 		y = np.array(self.y, dtype=float)
 
-		plt.scatter(X, y, color='blue')
+		fig, ax = plt.subplots()
+		ax.scatter(X, y, color='blue')
 		X_range = np.linspace(min(X), max(X), 100).reshape(-1, 1)
 		y_range_pred = self.theta_1 * X_range + self.theta_0
-		plt.plot(X_range, y_range_pred, color='red', label='Tendency line')
-		plt.xlabel('mileage')
-		plt.ylabel('price')
-		plt.title('Linear Regression')
-		plt.legend()
-		if not os.path.exists("graphs"):
-			os.makedirs("graphs")
-		plt.savefig("graphs/linear_regression.png")
-		plt.show()
+		ax.plot(X_range, y_range_pred, color='red', label='Tendency line')
+		ax.set_xlabel('mileage')
+		ax.set_ylabel('price')
+		ax.set_title('Linear Regression')
+		ax.legend()
+		return fig, ax
