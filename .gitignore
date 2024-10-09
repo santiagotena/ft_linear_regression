@@ -1,9 +1,12 @@
 # environment files
 .project_env
 
+# plots
+*.png
+
 # cache
 .mypy_cache
 __pycache__
 
-# plots
-*.png
+# misc 
+.DS_Store
