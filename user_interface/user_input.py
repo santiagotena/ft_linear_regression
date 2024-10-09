@@ -33,7 +33,7 @@ def show_welcome_message():
 		"car given its mileage.\n"
 		"The model is trained using pre-loaded data.\n"
 		"The initial values for the intercept and slope parameter are zero.\n"
-		"The generated graphs can be found within the ./graphs directory.")
+		"The generated graphs can be found within the ./graphs/ directory.")
 
 def ask_for_commands():
 	print("\nCommands available: 'estimate' 'plot_data' 'train' 'exit'.")
