@@ -1,0 +1,9 @@
+# environment files
+.project_env
+
+# cache
+.mypy_cache
+__pycache__
+
+# plots
+*.png
