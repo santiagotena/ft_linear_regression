@@ -1,3 +1,5 @@
+import os
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -31,6 +33,8 @@ class LinearRegression:
 		plt.xlabel('mileage')
 		plt.ylabel('price')
 		plt.title('Data')
+		if not os.path.exists("graphs"):
+			os.makedirs("graphs")
 		plt.savefig("graphs/data_scatterplot.png")
 		plt.show()
 
@@ -84,5 +88,7 @@ class LinearRegression:
 		plt.ylabel('price')
 		plt.title('Linear Regression')
 		plt.legend()
+		if not os.path.exists("graphs"):
+			os.makedirs("graphs")
 		plt.savefig("graphs/linear_regression.png")
 		plt.show()
