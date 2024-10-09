@@ -81,5 +81,9 @@ def display_training_end_status():
 	print("\nTraining complete.\n")
 
 def display_training_results(linear_regression):
-	linear_regression.evaluate_model()
+	rmse, y_mean, mae, error_percentage = linear_regression.evaluate_model()
+	print(f"Root Mean Squared Error: {round(rmse, 2)}")
+	print(f"Mean value of price: {round(y_mean, 2)}")
+	print(f"Mean Absolute Error: {round(mae, 2)}")
+	print(f"Error Percentage: {round(error_percentage, 2)}%")
 	linear_regression.plot_results()

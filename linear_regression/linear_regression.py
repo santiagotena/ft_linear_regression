@@ -68,13 +68,15 @@ class LinearRegression:
 	
 	def evaluate_model(self):
 		y_pred = self.predict(self.X_test)
-		print("Mean value of price:", np.mean(self.y))
-		mae = mean_absolute_error(y_pred, self.y_test)
-		print("Mean Absolute Error:", mae)
-		error_percentage = 100 * mae / np.mean(self.y)
-		print("Error Percentage:", error_percentage)
 		rmse = np.sqrt(mean_squared_error(y_pred, self.y_test))
+		y_mean = np.mean(self.y)
+		mae = mean_absolute_error(y_pred, self.y_test)
+		error_percentage = 100 * mae / y_mean
+		return rmse, y_mean, mae, error_percentage
 		print("Root Mean Squared Error:", rmse)
+		print("Mean value of price:", y_mean)
+		print("Mean Absolute Error:", mae)
+		print("Error Percentage:", error_percentage)
 
 	def plot_results(self):
 		X = np.array(self.X, dtype=float)
