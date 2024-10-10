@@ -46,12 +46,12 @@ class LinearRegression:
 		df = pd.read_csv('data/data.csv')
 		self.X_ = df.drop('price', axis=1)
 		self.y_ = df['price']
-	
+
 	def split_data(self):
-		X_train, X_test, self.y_train_, self.y_test_ = train_test_split(self.X_, 
-																																	self.y_, 
-																																	test_size=0.2, 
-																																	random_state=self.random_seed)
+		X_train, X_test, self.y_train_, self.y_test_ = train_test_split(self.X_,
+																																		self.y_,
+																																		test_size=0.2,
+																																		random_state=self.random_seed)
 		self.X_train = np.array(X_train, dtype=np.float64).squeeze()
 		self.X_test_ = np.array(X_test, dtype=np.float64).squeeze()
 		self.y_train_ = np.array(self.y_train_, dtype=np.float64).squeeze()
@@ -73,14 +73,14 @@ class LinearRegression:
 		sigma = self.scaler_.std_
 		self.theta_0_ = self.theta_0_ - np.sum((mu / sigma) * self.theta_1_)
 		self.theta_1_ = self.theta_1_ / sigma
-	
+
 	def evaluate_model(self):
 		y_pred = self.predict(self.X_test_)
 		rmse = np.sqrt(mean_squared_error(y_pred, self.y_test_))
-		y_mean = np.mean(self.y_)
+		y_test_mean = np.mean(self.y_test_)
 		mae = mean_absolute_error(y_pred, self.y_test_)
-		error_percentage = 100 * mae / y_mean
-		return rmse, y_mean, mae, error_percentage
+		error_percentage = 100 * mae / y_test_mean
+		return rmse, y_test_mean, mae, error_percentage
 
 	def plot_results(self):
 		X = np.array(self.X_, dtype=float)
