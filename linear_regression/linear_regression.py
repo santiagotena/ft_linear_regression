@@ -34,31 +34,41 @@ class LinearRegression:
 		return fig, ax
 
 	def train(self):
+		self.load_data()
+		self.split_data()
+		self.standarize_data()
+		for _ in range(self.iterations):
+			self.theta_0, self.theta_1 = self.update_thetas()
+		self.transform_thetas_to_original_units()
+
+	def load_data(self):
 		df = pd.read_csv('data/data.csv')
 		self.X = df.drop('price', axis=1)
 		self.y = df['price']
-
+	
+	def split_data(self):
 		X_train, X_test, self.y_train, self.y_test = train_test_split(self.X, self.y, test_size=0.2, random_state=42)
-		X_train = np.array(X_train, dtype=np.float64).squeeze()
+		self.X_train = np.array(X_train, dtype=np.float64).squeeze()
 		self.X_test = np.array(X_test, dtype=np.float64).squeeze()
 		self.y_train = np.array(self.y_train, dtype=np.float64).squeeze()
 		self.y_test = np.array(self.y_test, dtype=np.float64).squeeze()
 
+	def standarize_data(self):
 		self.scaler = StandardScaler()
-		self.X_train_scaled = self.scaler.fit_transform(X_train)
-
-		for _ in range(self.iterations):
-			self.theta_0, self.theta_1 = self.update_thetas()
-
-		mu = self.scaler.mean
-		sigma = self.scaler.std
-		self.theta_0 = self.theta_0 - np.sum((mu / sigma) * self.theta_1)
-		self.theta_1 = self.theta_1 / sigma
+		self.X_train_scaled = self.scaler.fit_transform(self.X_train)
 
 	def update_thetas(self):
-		tmp_theta_0 = self.learning_rate/len(self.X_train_scaled) * np.sum((self.predict(self.X_train_scaled) - self.y_train))
-		tmp_theta_1 = self.learning_rate/len(self.X_train_scaled) * np.sum((self.predict(self.X_train_scaled) - self.y_train) * self.X_train_scaled)
+		constant = self.learning_rate / len(self.X_train_scaled)
+		error = self.predict(self.X_train_scaled) - self.y_train
+		tmp_theta_0 = constant * np.sum(error)
+		tmp_theta_1 = constant * np.sum(error * self.X_train_scaled)
 		return self.theta_0 - tmp_theta_0, self.theta_1 - tmp_theta_1
+	
+	def transform_thetas_to_original_units(self):
+		mu = self.scaler.mean_
+		sigma = self.scaler.std_
+		self.theta_0 = self.theta_0 - np.sum((mu / sigma) * self.theta_1)
+		self.theta_1 = self.theta_1 / sigma
 	
 	def evaluate_model(self):
 		y_pred = self.predict(self.X_test)
