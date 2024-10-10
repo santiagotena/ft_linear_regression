@@ -1,10 +1,11 @@
 import numpy as np
 
-def train_test_split(X, y, test_size=0.2, random_state=42):
+def train_test_split(X, y, test_size=0.2, random_state=None):
 	X_len = X.shape[0]
 	indices = np.arange(X_len)
 
-	np.random.seed(random_state)
+	if random_state is not None:
+		np.random.seed(random_state)
 	np.random.shuffle(indices)
 	
 	test_elements = int(X_len * test_size)

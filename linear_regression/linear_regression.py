@@ -10,6 +10,7 @@ class LinearRegression:
 		self.theta_1_ = 0
 		self.learning_rate_ = 0.1
 		self.iterations_ = 1000
+		self.random_seed = 42
 		self.X_ = None
 		self.y_ = None
 		self.X_train_scaled_ = None
@@ -47,7 +48,10 @@ class LinearRegression:
 		self.y_ = df['price']
 	
 	def split_data(self):
-		X_train, X_test, self.y_train_, self.y_test_ = train_test_split(self.X_, self.y_, test_size=0.2, random_state=42)
+		X_train, X_test, self.y_train_, self.y_test_ = train_test_split(self.X_, 
+																																	self.y_, 
+																																	test_size=0.2, 
+																																	random_state=self.random_seed)
 		self.X_train = np.array(X_train, dtype=np.float64).squeeze()
 		self.X_test_ = np.array(X_test, dtype=np.float64).squeeze()
 		self.y_train_ = np.array(self.y_train_, dtype=np.float64).squeeze()
